@@ -2,7 +2,7 @@
 
 ## 1. Reliable, Scalable, and Maintainable Applications
 
-### Thinking About Data Systems
+## Thinking About Data Systems
 
 Many applications have common needs, including:
 
@@ -41,3 +41,7 @@ Designing software with future maintenance in mind can prevent creating new lega
 1. **Operability**: Ensure it's easy for operations teams to manage and maintain the system.
 2. **Simplicity**: Aim for ease of understanding for new engineers, focusing on reducing system complexity rather than just simplifying the user interface.
 3. **Evolvability (Extensibility/Modifiability)**: Design the system so it's easy to adapt and modify for future, unforeseen needs.
+
+Operations key tasks: monitoring system health, troubleshooting, updating software, managing inter-system interactions, planning for future issues, setting best practices, and maintaining security and stability.
+
+## Data Models and Query Languages
