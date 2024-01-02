@@ -42,6 +42,19 @@ Designing software with future maintenance in mind can prevent creating new lega
 2. **Simplicity**: Aim for ease of understanding for new engineers, focusing on reducing system complexity rather than just simplifying the user interface.
 3. **Evolvability (Extensibility/Modifiability)**: Design the system so it's easy to adapt and modify for future, unforeseen needs.
 
-Operations key tasks: monitoring system health, troubleshooting, updating software, managing inter-system interactions, planning for future issues, setting best practices, and maintaining security and stability.
+Operations key tasks: monitoring system health, troubleshooting, updating software, managing inter-system ineractions, planning for future issues, setting best practices, and maintaining security and stability.
 
 ## Data Models and Query Languages
+
+- SQL: Relational model. Good for structured data with fixed schema.
+- NoSQL: Non-relational model. Good for semi-structured data with dynamic schema. Arised because of the need for greater scalability, and the preference for open source software. Specialized queries not supported by SQL are also a reason.
+- Applications have varying needs, both relational and non-relational. Polyglot persistence is the idea of using multiple data storage technologies for different needs.
+- The traditional SQL data model often clashes with object-oriented programming, creating a so-called impedance mismatch.
+- Normalizing data: Splitting up tables into smaller tables and using references between them. This is good for avoiding data duplication, but can be bad for performance.
+- Denormalizing data: Storing data in redundant ways to increase performance. This is good for performance, but can be bad for data integrity.
+- The main arguments in favor of the document data model are schema flexibility, better performance due to locality, and that for some applications it is closer to the data structures used by the application. The relational model counters by providing better support for joins, and many-to-one and many-to-many relationships.
+- The choice between them depends on your application's data structure. Document databases work well for data with a tree-like structure, where you typically load the entire tree at once. However, they have limitations, like poor support for joins and difficulty in referring to nested items.
+- For applications with many-to-many relationships, document databases can become complex and less efficient. You might denormalize data to reduce joins, but this adds complexity to maintaining data consistency.
+- Accessing only a small part of a large document can be inefficient, as the database loads the entire document. Additionally, updates to a document typically require rewriting the whole document, especially if the update changes its size. Therefore, it's recommended to keep documents small and avoid updates that increase their size.
+- When the relational model came out, it introduced SQL, a different way to ask for data. SQL is 'declarative,' which means you just say what you want, not how to get it. Before SQL, databases used 'imperative' code, where you have to spell out every step to find your data.
+-
