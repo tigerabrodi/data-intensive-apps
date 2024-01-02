@@ -57,4 +57,7 @@ Operations key tasks: monitoring system health, troubleshooting, updating softwa
 - For applications with many-to-many relationships, document databases can become complex and less efficient. You might denormalize data to reduce joins, but this adds complexity to maintaining data consistency.
 - Accessing only a small part of a large document can be inefficient, as the database loads the entire document. Additionally, updates to a document typically require rewriting the whole document, especially if the update changes its size. Therefore, it's recommended to keep documents small and avoid updates that increase their size.
 - When the relational model came out, it introduced SQL, a different way to ask for data. SQL is 'declarative,' which means you just say what you want, not how to get it. Before SQL, databases used 'imperative' code, where you have to spell out every step to find your data.
--
+- In the property graph model, each vertex (node) and edge (relationship) has its unique identifier, connections, and properties (key-value pairs).
+- Graphs are flexible and extensible, ideal for evolving applications. They can represent complex relationships, like regional structures varying by country or detailed personal profiles.
+
+## Storage and Retrieval
