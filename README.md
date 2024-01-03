@@ -75,3 +75,5 @@ As an application developer, understanding how databases handle storage and retr
 5. **Handling Data Growth and Scalability**: Understanding storage engines helps in planning for data growth and scalability challenges. Different engines handle data growth, concurrency, and fault tolerance in various ways.
 
 ### Data Structures That Power Your Database
+
+- An index is a separate structure that helps quickly locate data without scanning the entire database. It speeds up reads but can slow down writes, as it also needs updating whenever data changes. This is a key trade-off in storage systems: better read performance at the cost of slower writes.
