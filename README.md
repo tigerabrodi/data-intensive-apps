@@ -123,3 +123,37 @@ As an application developer, understanding how databases handle storage and retr
   - Choice depends on complexity and analytical needs.
 
 ### Column-Oriented Storage
+
+#### Column-Oriented Storage
+
+- **Purpose:** Optimized for reading large datasets, especially in analytics and data warehousing.
+- **How it Works:** Stores data by columns rather than rows, allowing efficient reading of specific attributes without loading entire records.
+- **Use Case:** Ideal for queries scanning large datasets for a few columns, such as aggregations and analytics.
+
+#### Column Compression
+
+- **Purpose:** Reduces storage space and improves read performance.
+- **How it Works:** Applies compression techniques like bitmap encoding, exploiting data repetition and patterns within columns.
+- **Use Case:** Useful in data warehouses with repetitive or patterned data in columns, enhancing query speed and reducing disk I/O.
+
+#### Sort Order in Column Storage
+
+- **Purpose:** Enhances query performance and compression efficiency.
+- **How it Works:** Data is sorted row-wise but stored column-wise; primary sort columns show strong compression.
+- **Use Case:** Beneficial for range queries and analytics where sorting by specific keys (like dates or categories) is common.
+
+#### Writing to Column-Oriented Storage
+
+- **Purpose:** To manage updates and new data insertions efficiently in a columnar format.
+- **How it Works:** Uses structures like LSM-trees; writes are first accumulated in-memory and then merged into on-disk column files.
+- **Use Case:** Suitable for systems where read performance is critical, and writes can be batched and processed periodically.
+
+#### Aggregation: Data Cubes and Materialized Views
+
+- **Purpose:** Accelerates common aggregate queries.
+- **How it Works:**
+  - **Data Cubes:** Precomputes and stores aggregate data in multi-dimensional cubes for rapid querying.
+  - **Materialized Views:** Stores the results of aggregate queries on disk for faster access.
+- **Use Case:** Effective in scenarios where the same aggregate calculations are performed frequently, such as business intelligence and reporting.
+
+## Encoding and Evolution
