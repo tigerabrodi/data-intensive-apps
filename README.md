@@ -76,4 +76,50 @@ As an application developer, understanding how databases handle storage and retr
 
 ### Data Structures That Power Your Database
 
-- An index is a separate structure that helps quickly locate data without scanning the entire database. It speeds up reads but can slow down writes, as it also needs updating whenever data changes. This is a key trade-off in storage systems: better read performance at the cost of slower writes.
+- **Hash Indexes:**
+
+  - Purpose: Quickly access data using a key.
+  - How It Works: Uses a hash function to compute an index where data is stored.
+  - Use Case: Best for scenarios where you need fast lookups for exact matches.
+
+- **SSTables (Sorted String Tables):**
+
+  - Purpose: Store large amounts of data in a sorted manner.
+  - How It Works: Data is stored in key-value pairs, sorted by key.
+  - Use Case: Useful for range queries and efficient merging of data segments.
+
+- **LSM Trees (Log-Structured Merge-Trees):**
+
+  - Purpose: Handle high-volume write operations.
+  - How It Works: Writes are added to a memtable, then flushed to SSTables. SSTables are merged and compacted in the background.
+  - Use Case: Ideal for write-intensive applications, such as logging systems.
+
+- **B-Trees:**
+
+  - Purpose: Maintain sorted data for efficient reads and writes.
+  - How It Works: Organizes data in a balanced tree structure, with data sorted within nodes.
+  - Use Case: Common in database systems for indexing due to good performance with both reads and writes.
+
+- **Comparing B-Trees and LSM-Trees:**
+
+  - B-Trees: Generally faster for reads, good for balanced read/write workloads.
+  - LSM-Trees: Typically faster for writes, better for write-heavy scenarios.
+  - Both have different performance and storage characteristics, so the choice depends on specific application needs.
+
+- **Other Indexing Structures:**
+  - Include multi-dimensional, full-text search, and fuzzy indexes.
+  - Each specialized for different types of queries, like geospatial data, text search, or data with typos.
+
+### Transaction Processing or Analytics?
+
+- **Data Warehousing:**
+
+  - Purpose: Analyze and report large datasets, separate from transactional databases.
+  - Characteristics: Optimized for read-heavy, complex queries; stores historical data for business intelligence.
+
+- **Stars and Snowflakes (Schemas in Data Warehousing):**
+  - Star Schema: Simple, with a central fact table linked to dimension tables.
+  - Snowflake Schema: More normalized, breaks down dimension tables into subdimensions.
+  - Choice depends on complexity and analytical needs.
+
+### Column-Oriented Storage
