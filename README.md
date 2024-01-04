@@ -157,3 +157,16 @@ As an application developer, understanding how databases handle storage and retr
 - **Use Case:** Effective in scenarios where the same aggregate calculations are performed frequently, such as business intelligence and reporting.
 
 ## Encoding and Evolution
+
+- **Evolvability in Applications:** Applications evolve with new features and changing requirements, often leading to changes in the data they store.
+- **Relational vs. Schema-on-Read Databases:**
+  - Relational databases use a fixed schema which can be updated with migrations.
+  - Schema-on-read databases allow mixed data formats, offering more flexibility.
+- **Code and Data Format Changes:** When data formats change, application code must also adapt to handle new and old data formats.
+- **Compatibility Considerations:**
+  - **Backward Compatibility:** New code versions can process data created by older versions.
+  - **Forward Compatibility:** Older code versions can handle data created by newer code.
+- **Compatibility in Large Applications:** Rolling upgrades and varying user update rates mean both old and new code/data formats coexist, necessitating careful compatibility management.
+- **Data Encoding Formats:** Formats like JSON, XML, Protocol Buffers, Thrift, and Avro handle schema changes differently and support compatibility in varying degrees.
+
+### Formats for Encoding Data
