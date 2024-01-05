@@ -216,3 +216,33 @@ As an application developer, understanding how databases handle storage and retr
   - Asynchronous communication via message brokers.
   - Offers reliability and decoupling, suitable for distributed systems.
   - Different from direct RPC and database storage due to intermediary (broker) involvement.
+
+# Distributed Data
+
+## Replication
+
+Replication involves storing the same data on multiple network-connected machines.
+
+Why?
+
+- **Close to Users:** Place data near users to reduce latency.
+- **High Availability:** Ensure system operation despite failures.
+- **Read Scalability:** Increase capacity for handling read requests.
+
+### Leaders and Followers
+
+What's a Replica?
+
+- **Replica**: It's like a copy of your database on different computers.
+
+- **Leader**: One replica is the boss (leader). When you want to add or change data, you tell this leader.
+
+- **Followers**: Other replicas are followers. They copy whatever the leader does. They just look at the leader's changes and make the same changes in their own copies. They get the changes from replication log.
+
+How it works?
+
+1. **Writing Data**: If you need to add new info to your database, you send it to the leader.
+2. **Updating Everyone**: The leader first saves this new info for itself, then tells all the followers about this new change.
+3. **Followers Update**: Each follower gets this update and adds the new info to their copies, exactly in the order the leader did.
+
+#### Synchronous Versus Asynchronous Replication
