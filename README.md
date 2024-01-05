@@ -44,7 +44,7 @@ Designing software with future maintenance in mind can prevent creating new lega
 
 Operations key tasks: monitoring system health, troubleshooting, updating software, managing inter-system ineractions, planning for future issues, setting best practices, and maintaining security and stability.
 
-## Data Models and Query Languages
+## 2. Data Models and Query Languages
 
 - SQL: Relational model. Good for structured data with fixed schema.
 - NoSQL: Non-relational model. Good for semi-structured data with dynamic schema. Arised because of the need for greater scalability, and the preference for open source software. Specialized queries not supported by SQL are also a reason.
@@ -60,7 +60,7 @@ Operations key tasks: monitoring system health, troubleshooting, updating softwa
 - In the property graph model, each vertex (node) and edge (relationship) has its unique identifier, connections, and properties (key-value pairs).
 - Graphs are flexible and extensible, ideal for evolving applications. They can represent complex relationships, like regional structures varying by country or detailed personal profiles.
 
-## Storage and Retrieval
+## 3. Storage and Retrieval
 
 As an application developer, understanding how databases handle storage and retrieval is crucial for a few reasons:
 
@@ -156,7 +156,7 @@ As an application developer, understanding how databases handle storage and retr
   - **Materialized Views:** Stores the results of aggregate queries on disk for faster access.
 - **Use Case:** Effective in scenarios where the same aggregate calculations are performed frequently, such as business intelligence and reporting.
 
-## Encoding and Evolution
+## 4. Encoding and Evolution
 
 - **Evolvability in Applications:** Applications evolve with new features and changing requirements, often leading to changes in the data they store.
 - **Relational vs. Schema-on-Read Databases:**
@@ -170,3 +170,49 @@ As an application developer, understanding how databases handle storage and retr
 - **Data Encoding Formats:** Formats like JSON, XML, Protocol Buffers, Thrift, and Avro handle schema changes differently and support compatibility in varying degrees.
 
 ### Formats for Encoding Data
+
+- **Language-Specific Formats:**
+
+  - Quick and easy encoding within a single programming language.
+  - Not suitable for long-term storage or inter-language communication due to language dependency and security risks.
+
+- **JSON, XML, and Binary Variants:**
+
+  - Language-independent, text-based formats.
+  - JSON and XML: Popular for web APIs; face issues with number precision and binary data handling.
+  - Binary variants of JSON/XML: More compact, but less human-readable.
+
+- **Thrift and Protocol Buffers:**
+
+  - Binary encoding formats requiring a schema.
+  - Efficient in size, use tag numbers for fields, and support cross-language compatibility.
+  - Suitable for high-performance, inter-service communication.
+
+- **Avro:**
+
+  - Binary format that relies on schemas for data structure.
+  - Schema evolution allows backward and forward compatibility.
+  - No tag numbers in schema, making it friendly for dynamically generated schemas.
+
+- **The Merits of Schemas:**
+  - Provide documentation, ensure data format consistency.
+  - Enable schema evolution for compatibility.
+  - Beneficial for statically typed languages due to compile-time type checking.
+
+### Modes of Dataflow
+
+- **Dataflow Through Databases:**
+
+  - Data is written and later read by different processes.
+  - Suitable for long-term storage with forward and backward compatibility considerations.
+
+- **Dataflow Through Services (REST and RPC):**
+
+  - REST: Uses HTTP with emphasis on statelessness and cacheability.
+  - RPC: Makes network requests appear as local function calls, with compatibility concerns.
+  - Common in microservices and inter-service communication.
+
+- **Message-Passing Dataflow:**
+  - Asynchronous communication via message brokers.
+  - Offers reliability and decoupling, suitable for distributed systems.
+  - Different from direct RPC and database storage due to intermediary (broker) involvement.
