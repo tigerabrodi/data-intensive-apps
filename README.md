@@ -277,3 +277,5 @@ How it works?
    - **Use Cases**: Data consistency, recovery, change data capture.
 
 ### Problems with Replication Lag
+
+Replication lag in databases, especially with leader-based replication, leads to eventual consistency, where data on followers might be outdated compared to the leader. This lag can be a fraction of a second under normal conditions, but in cases of high load or network issues, it can increase significantly. This creates challenges for applications relying on up-to-date data. The issue becomes more apparent in systems with many read-only replicas, used to scale read operations and distribute loads geographically. The replication lag introduces temporary inconsistencies: the same query might return different results on the leader and a follower if the follower hasn't yet received the latest updates.
