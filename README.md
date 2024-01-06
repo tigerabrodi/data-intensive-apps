@@ -245,4 +245,35 @@ How it works?
 2. **Updating Everyone**: The leader first saves this new info for itself, then tells all the followers about this new change.
 3. **Followers Update**: Each follower gets this update and adds the new info to their copies, exactly in the order the leader did.
 
-#### Synchronous Versus Asynchronous Replication
+4. **Synchronous vs. Asynchronous Replication**:
+
+   - **What**: Methods to replicate data across database nodes.
+   - **Purpose**: To synchronize data across multiple replicas for consistency and availability.
+   - **How it Works**:
+     - **Synchronous**: Leader waits for confirmation from followers before considering a write complete.
+     - **Asynchronous**: Leader doesn't wait for followers, reducing write latency but increasing risk of data loss.
+   - **Use Cases**: Synchronous for data integrity; Asynchronous for performance and scalability.
+
+5. **Setting Up New Followers**:
+
+   - **What**: Process of adding new replicas to a database system.
+   - **Purpose**: To increase data availability and load distribution.
+   - **How it Works**: Snapshot leader's data, copy to new node, then sync any changes since snapshot.
+   - **Use Cases**: Scaling, load balancing, replacing failed nodes.
+
+6. **Handling Node Outages**:
+
+   - **What**: Maintaining database operation despite node failures.
+   - **Purpose**: To ensure high availability and data integrity.
+   - **How it Works**:
+     - **Follower Failure**: Recover using data change logs.
+     - **Leader Failure (Failover)**: Promote a follower to a new leader, reconfigure system.
+   - **Use Cases**: Fault tolerance, maintenance without downtime.
+
+7. **Implementation of Replication Logs**:
+   - **What**: Mechanisms to record and transmit data changes in replication.
+   - **Purpose**: To ensure data consistency across replicas.
+   - **How it Works**: Various methods like statement-based, write-ahead logs (WAL), logical logging.
+   - **Use Cases**: Data consistency, recovery, change data capture.
+
+### Problems with Replication Lag
