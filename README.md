@@ -292,3 +292,34 @@ How it works?
   3. Keep track of update sequences to maintain order.
   4. Route user requests to the same server to maintain consistency.
   5. In case of a big lag, consider stronger guarantees like transactions, which can handle order and consistency more effectively.
+
+### Multi-Leader Replication
+
+**Multi-Leader Replication**
+
+- **What**: A replication strategy where multiple nodes (leaders) can independently accept and process write operations.
+- **Purpose**: To enhance performance and fault tolerance, especially across geographically distributed systems or disconnected clients.
+- **How it Works**: Each leader handles writes locally and then replicates these changes to other leaders.
+- **Use Cases**: Multi-datacenter operations, offline client operation, real-time collaborative editing.
+
+**Use Cases for Multi-Leader Replication**
+
+- **Multi-Datacenter Operation**: Each datacenter has its leader, improving write performance and reducing latency.
+- **Clients with Offline Operation**: Devices or clients work independently offline and sync when online.
+- **Collaborative Editing**: Multiple users edit the same document simultaneously with changes synced in real-time.
+
+**Handling Write Conflicts**
+
+- **What**: Resolving data discrepancies when the same data is modified independently on different leaders.
+- **Approaches**:
+  1. Conflict Avoidance: Directing all writes for specific data to the same leader.
+  2. Last Write Wins: The most recent write overwrites others.
+  3. Custom Conflict Resolution: Application-specific logic to merge or choose between conflicting changes.
+
+**Multi-Leader Replication Topologies**
+
+- **All-to-All**: Each leader replicates its changes to every other leader. Offers robust fault tolerance.
+- **Circular**: Leaders form a ring, with each node forwarding data to the next. Simple but vulnerable to node failures.
+- **Star**: A central "root" node replicates changes to all other nodes. Efficient but creates a single point of failure.
+
+### Leaderless Replication
