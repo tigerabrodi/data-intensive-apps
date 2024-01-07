@@ -245,7 +245,9 @@ How it works?
 2. **Updating Everyone**: The leader first saves this new info for itself, then tells all the followers about this new change.
 3. **Followers Update**: Each follower gets this update and adds the new info to their copies, exactly in the order the leader did.
 
-4. **Synchronous vs. Asynchronous Replication**:
+---
+
+1. **Synchronous vs. Asynchronous Replication**:
 
    - **What**: Methods to replicate data across database nodes.
    - **Purpose**: To synchronize data across multiple replicas for consistency and availability.
@@ -254,14 +256,14 @@ How it works?
      - **Asynchronous**: Leader doesn't wait for followers, reducing write latency but increasing risk of data loss.
    - **Use Cases**: Synchronous for data integrity; Asynchronous for performance and scalability.
 
-5. **Setting Up New Followers**:
+2. **Setting Up New Followers**:
 
    - **What**: Process of adding new replicas to a database system.
    - **Purpose**: To increase data availability and load distribution.
    - **How it Works**: Snapshot leader's data, copy to new node, then sync any changes since snapshot.
    - **Use Cases**: Scaling, load balancing, replacing failed nodes.
 
-6. **Handling Node Outages**:
+3. **Handling Node Outages**:
 
    - **What**: Maintaining database operation despite node failures.
    - **Purpose**: To ensure high availability and data integrity.
@@ -270,7 +272,7 @@ How it works?
      - **Leader Failure (Failover)**: Promote a follower to a new leader, reconfigure system.
    - **Use Cases**: Fault tolerance, maintenance without downtime.
 
-7. **Implementation of Replication Logs**:
+4. **Implementation of Replication Logs**:
    - **What**: Mechanisms to record and transmit data changes in replication.
    - **Purpose**: To ensure data consistency across replicas.
    - **How it Works**: Various methods like statement-based, write-ahead logs (WAL), logical logging.
@@ -278,4 +280,15 @@ How it works?
 
 ### Problems with Replication Lag
 
-Replication lag in databases, especially with leader-based replication, leads to eventual consistency, where data on followers might be outdated compared to the leader. This lag can be a fraction of a second under normal conditions, but in cases of high load or network issues, it can increase significantly. This creates challenges for applications relying on up-to-date data. The issue becomes more apparent in systems with many read-only replicas, used to scale read operations and distribute loads geographically. The replication lag introduces temporary inconsistencies: the same query might return different results on the leader and a follower if the follower hasn't yet received the latest updates.
+- **Problems with Replication Lag**: This occurs when there's a delay in updating data across servers. It can lead to users seeing outdated information. For instance, a user might not see a recent update they made because it hasn't been copied to the server they're accessing.
+
+- **Monotonic Reads**: These prevent users from seeing data out of order. If a user accesses data from multiple servers, monotonic reads ensure they don't see newer data first and then older data, which can be confusing.
+
+- **Consistent Prefix Reads**: These ensure users see events in the right order. For example, in a chat, it ensures responses appear after the questions, not before. This is important in systems where different parts of the data update at different speeds.
+
+- **Solutions for Replication Lag**: To deal with replication lag, you can:
+  1. Read from the main server after updates to ensure up-to-date information.
+  2. Use timestamps to ensure data read is recent.
+  3. Keep track of update sequences to maintain order.
+  4. Route user requests to the same server to maintain consistency.
+  5. In case of a big lag, consider stronger guarantees like transactions, which can handle order and consistency more effectively.
