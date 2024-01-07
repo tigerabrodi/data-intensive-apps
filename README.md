@@ -115,7 +115,7 @@ As an application developer, understanding how databases handle storage and retr
 - **Data Warehousing:**
 
   - Purpose: Analyze and report large datasets, separate from transactional databases.
-  - Characteristics: Optimized for read-heavy, complex queries; stores historical data for business intelligence.
+  - Characteristics: Optimized for read-heavy, complex queries. Stores historical data for business intelligence.
 
 - **Stars and Snowflakes (Schemas in Data Warehousing):**
   - Star Schema: Simple, with a central fact table linked to dimension tables.
@@ -139,13 +139,13 @@ As an application developer, understanding how databases handle storage and retr
 #### Sort Order in Column Storage
 
 - **Purpose:** Enhances query performance and compression efficiency.
-- **How it Works:** Data is sorted row-wise but stored column-wise; primary sort columns show strong compression.
+- **How it Works:** Data is sorted row-wise but stored column-wise. Primary sort columns show strong compression.
 - **Use Case:** Beneficial for range queries and analytics where sorting by specific keys (like dates or categories) is common.
 
 #### Writing to Column-Oriented Storage
 
 - **Purpose:** To manage updates and new data insertions efficiently in a columnar format.
-- **How it Works:** Uses structures like LSM-trees; writes are first accumulated in-memory and then merged into on-disk column files.
+- **How it Works:** Uses structures like LSM-trees. Writes are first accumulated in-memory and then merged into on-disk column files.
 - **Use Case:** Suitable for systems where read performance is critical, and writes can be batched and processed periodically.
 
 #### Aggregation: Data Cubes and Materialized Views
@@ -179,7 +179,7 @@ As an application developer, understanding how databases handle storage and retr
 - **JSON, XML, and Binary Variants:**
 
   - Language-independent, text-based formats.
-  - JSON and XML: Popular for web APIs; face issues with number precision and binary data handling.
+  - JSON and XML: Popular for web APIs. Face issues with number precision and binary data handling.
   - Binary variants of JSON/XML: More compact, but less human-readable.
 
 - **Thrift and Protocol Buffers:**
@@ -254,7 +254,7 @@ How it works?
    - **How it Works**:
      - **Synchronous**: Leader waits for confirmation from followers before considering a write complete.
      - **Asynchronous**: Leader doesn't wait for followers, reducing write latency but increasing risk of data loss.
-   - **Use Cases**: Synchronous for data integrity; Asynchronous for performance and scalability.
+   - **Use Cases**: Synchronous for data integrity. Asynchronous for performance and scalability.
 
 2. **Setting Up New Followers**:
 
@@ -323,3 +323,37 @@ How it works?
 - **Star**: A central "root" node replicates changes to all other nodes. Efficient but creates a single point of failure.
 
 ### Leaderless Replication
+
+1. **Leaderless Replication:**
+
+   - **What:** A replication model where any replica can directly accept writes from clients.
+   - **Purpose:** Increases robustness against node failures and network issues. Suitable for scenarios where low latency and high availability are crucial.
+   - **How It Works:** Clients send write requests to multiple replicas. Reads are also sent to multiple nodes to detect stale data.
+   - **Use Cases:** Dynamo-style databases (e.g., Riak, Cassandra, Voldemort), applications needing high availability and handling eventual consistency.
+
+2. **Writing to the Database When a Node Is Down:**
+
+   - **What:** Handling write operations in a leaderless system when one or more replicas are unavailable.
+   - **How It Works:** Write requests are sent to all replicas, but only a subset (e.g., 2 out of 3) needs to acknowledge for the write to be successful.
+   - **Purpose:** Maintains write availability despite individual node failures.
+   - **Use Cases:** Any situation with intermittent node availability, maintenance periods, or network issues.
+
+3. **Limitations of Quorum Consistency:**
+
+   - **What:** Challenges in ensuring that reads always return the most recent write in a leaderless system.
+   - **How It Works:** Relies on overlapping sets of nodes for reads and writes (w + r > n) but can face issues with concurrent writes and network delays.
+   - **Purpose:** Balances read availability with consistency.
+   - **Use Cases:** Optimizing for either read or write performance in distributed systems, handling network partitions.
+
+4. **Sloppy Quorums and Hinted Handoff:**
+
+   - **What:** An extension of the quorum model to increase write availability during network partitions.
+   - **How It Works:** Writes are temporarily allowed to non-designated nodes (sloppy quorum), which later hand off the data to the correct nodes (hinted handoff).
+   - **Purpose:** Improves write availability during network issues.
+   - **Use Cases:** Scenarios with unreliable networks or frequent partitions, enhancing robustness in distributed databases.
+
+5. **Detecting Concurrent Writes:**
+   - **What:** Identifying and resolving conflicts from simultaneous writes to the same key in a leaderless system.
+   - **How It Works:** Using version numbers or vectors to track write order. Resolving conflicts by merging or picking the latest write.
+   - **Purpose:** Ensures eventual consistency even with concurrent data modifications.
+   - **Use Cases:** Leaderless databases handling concurrent user interactions, applications requiring automatic conflict resolution.
