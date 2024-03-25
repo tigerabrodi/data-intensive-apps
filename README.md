@@ -357,3 +357,5 @@ How it works?
    - **How It Works:** Using version numbers or vectors to track write order. Resolving conflicts by merging or picking the latest write.
    - **Purpose:** Ensures eventual consistency even with concurrent data modifications.
    - **Use Cases:** Leaderless databases handling concurrent user interactions, applications requiring automatic conflict resolution.
+
+## Partitioning
